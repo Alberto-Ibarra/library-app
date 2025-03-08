@@ -1,4 +1,11 @@
-import {findAllCurrentBooks, patronsWithOverDueBooks,currentlyCheckedOutBooks} from './models/bookModel.js'
+import {findAllCurrentBooks, 
+    patronsWithOverDueBooks,
+    currentlyCheckedOutBooks,
+    booksCheckedOutByPatron,
+    booksByAuthor,
+    booksOnHold,
+    patronsOnWaitList,
+    countOfPatronsForABook} from './models/bookModel.js'
 
 const displayBooks = async () => {
     const books = await findAllCurrentBooks();
@@ -16,6 +23,37 @@ const checkedOut = async () => {
     
 }
 
+const numberOfCheckedOutBooks = async () => {
+    const checkedOut = await booksCheckedOutByPatron()
+    console.log(checkedOut);
+}
+
+const ListOfAuthorBooks = async () => {
+    const authorList = await booksByAuthor()
+    console.log(authorList);
+}
+
+const onHold = async () => {
+    const bOnHold = await booksOnHold()
+    console.log(bOnHold);
+}
+
+const onWaitList = async () => {
+    const waitlist = await patronsOnWaitList()
+    console.log(waitlist);
+}
+
+const patronsWaitingOnBook = async () => {
+    const waitlist = await countOfPatronsForABook()
+    console.log(waitlist);
+    
+}
+
 // displayBooks();
 // displayOverduePatrons();
-checkedOut();
+// checkedOut();
+// numberOfCheckedOutBooks();
+// ListOfAuthorBooks()
+// onHold()
+// onWaitList()
+patronsWaitingOnBook()

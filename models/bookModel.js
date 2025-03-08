@@ -35,3 +35,54 @@ export const currentlyCheckedOutBooks = async () => {
         "WHERE c.is_returned = FALSE" 
     return await executeQuery(query);
 };
+
+//Get the number of books checked out by a patron
+export const booksCheckedOutByPatron = async () => {
+    const query = 
+        "SELECT COUNT(c.id) AS checked_out_books " +
+        "FROM checkout c " +
+        "WHERE c.patronaccountid = 1 AND c.is_returned = FALSE " 
+    return await executeQuery(query);
+};
+
+//List of books by author
+export const booksByAuthor = async () => {
+    const query = 
+        "SELECT b.title, a.name AS author_name " +
+        "FROM book b " +
+        "JOIN book_author ba ON b.id = ba.bookid " +
+        "JOIN author a ON ba.authorid = a.id " +
+        "WHERE a.name = 'J.K. Rowling'" 
+    return await executeQuery(query);
+};
+
+//Get all books on hold (including the patron and copy details)
+export const booksOnHold = async () => {
+    const query = 
+        "SELECT p.firstname, p.lastname, b.title, h.starttime, bc.yearpublished " +
+        "FROM hold h " +
+        "JOIN book_copy bc ON h.bookcopyid = bc.id " +
+        "JOIN book b ON bc.bookid = b.id " +
+        "JOIN patron_account p ON h.patronaccountid = p.id "
+    return await executeQuery(query);
+};
+
+//Find all patrons currently on a waitlist for a book
+export const patronsOnWaitList = async () => {
+    const query = 
+        "SELECT p.firstname, p.lastname, b.title " +
+        "FROM waitlist w " +
+        "JOIN patron_account p ON w.patronaccountid = p.id " +
+        "JOIN book b ON w.bookid = b.id"
+    return await executeQuery(query);
+};
+
+//Get the count of patrons waiting for a specific book
+export const countOfPatronsForABook = async () => {
+    const query = 
+        "SELECT COUNT(*) AS waitlist_count " +
+        "FROM waitlist w " +
+        "JOIN book b ON w.bookid = b.id " +
+        "WHERE b.title = 'Harry Potter and the Philosopher''s Stone'"
+    return await executeQuery(query);
+};
