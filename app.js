@@ -1,14 +1,21 @@
-import {findAllCurrentBooks} from './queries/bookQueries.js'
+import {findAllCurrentBooks, patronsWithOverDueBooks,currentlyCheckedOutBooks} from './models/bookModel.js'
 
 const displayBooks = async () => {
-    try {
-        const books = await findAllCurrentBooks()
-        console.log(JSON.stringify(books,null,2));
-        
-    } catch (error) {
-        console.log(error);
-        
-    }
+    const books = await findAllCurrentBooks();
+    console.log(books);
+};
+
+const displayOverduePatrons = async () => {
+    const patrons = await patronsWithOverDueBooks();
+    console.log(patrons);
+};
+
+const checkedOut = async () => {
+    const checkOutBooks = await currentlyCheckedOutBooks()
+    console.log(checkOutBooks);
+    
 }
 
-displayBooks()
+// displayBooks();
+// displayOverduePatrons();
+checkedOut();
