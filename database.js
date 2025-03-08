@@ -10,14 +10,4 @@ const pool = mysql.createPool({
     database: process.env.SQL_DATABASE
 }).promise()
 
-const getAllBooks = async () => {
-    try {
-        const [rows] = await pool.query("SELECT * FROM book")
-        console.log(JSON.stringify(rows, null, 2));
-    } catch (error) {
-        console.log(error);
-        
-    }
-}
-
-getAllBooks()
+export default pool
