@@ -1,6 +1,12 @@
 import executeQuery from './util/queryUtils.js';
 
 
+//find all books
+export const allBooks = async () => {
+    const query = "SELECT * FROM book";
+    return await executeQuery(query);
+}
+
 // Find all books currently available (not checked out)
 export const findAllCurrentBooks = async () => {
     const query = 
