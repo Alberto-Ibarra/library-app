@@ -1,5 +1,6 @@
 import express from 'express';
 import bookRoutes from './routes/bookRoutes.js'
+import bookCopyRoutes from './routes/bookCopyRoutes.js'
 
 const app = express();
 const port = 3000;
@@ -12,7 +13,8 @@ app.get('/bookvault', (req, res) => {
     res.send('Welcome to the Library Management System!');
 });
 
-app.use('/bookvault', bookRoutes)
+app.use('/', bookRoutes)
+app.use('/', bookCopyRoutes)
 
 // Start the server
 app.listen(port, () => {

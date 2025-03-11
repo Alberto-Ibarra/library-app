@@ -1,13 +1,18 @@
 import executeQuery from './util/queryUtils.js';
 
 
-// List all book copies and their availability
 export const listAllBookCopies = async () => {
     const query = 
-        "SELECT b.title, bc.yearpublished, IFNULL(c.id, 'Available') AS status " +
+        "SELECT bc.*, b.title, " +
+        "CASE " +
+        "  WHEN bc.isavailable = FALSE THEN 'Checked Out' " +
+        "  WHEN hc.bookcopyid IS NOT NULL THEN 'On Hold' " +
+        "  ELSE 'Available' " +
+        "END AS status " +
         "FROM book b " +
         "JOIN book_copy bc ON b.id = bc.bookid " +
-        "LEFT JOIN checkout c ON bc.id = c.bookcopyid AND c.is_returned = FALSE";
+        "LEFT JOIN checkout c ON bc.id = c.bookcopyid AND c.is_returned = FALSE " +
+        "LEFT JOIN hold hc ON bc.id = hc.bookcopyid AND hc.endtime > NOW()";
     return await executeQuery(query);
 };
 
