@@ -8,11 +8,11 @@ const port = 3000;
 app.use(express.json());
 
 // Routes
-app.get('/', (req, res) => {
+app.get('/bookvault', (req, res) => {
     res.send('Welcome to the Library Management System!');
 });
 
-app.use('/', bookRoutes)
+app.use('/bookvault', bookRoutes)
 
 // Start the server
 app.listen(port, () => {
