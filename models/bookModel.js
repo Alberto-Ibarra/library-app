@@ -9,6 +9,8 @@ export const allBooks = async () => {
 
 // Find all books currently available (not checked out)
 export const findAllCurrentBooks = async () => {
+    console.log('triggered');
+    
     const query = 
         "SELECT b.title, b.id " +
         "FROM book b " +
