@@ -1,5 +1,6 @@
 import {
     allBooks,
+    addBook,
     findAllCurrentBooks,
     patronsWithOverDueBooks,
     currentlyCheckedOutBooks,
@@ -20,6 +21,20 @@ export const getAllBooks = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };
+
+// Add a new book
+export const addNewBook = async (req, res) => {
+    try {
+        console.log(req.body); 
+        const { title, authorNames, categoryId } = req.body;
+        const result = await addBook(title, authorNames, categoryId);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error("Error adding new book:", error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
 
 // Get all currently available books (not checked out)
 export const getAllCurrentBooks = async (req, res) => {

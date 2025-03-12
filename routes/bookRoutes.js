@@ -1,6 +1,7 @@
 import express from 'express';
 import {
     getAllBooks,
+    addNewBook,
     getAllCurrentBooks,
     getOverduePatrons,
     getCheckedOutBooks,
@@ -15,6 +16,7 @@ const router = express.Router();
 
 // Book Routes
 router.get('/books', getAllBooks);                        // Get all books
+router.post('/addBook', addNewBook);
 router.get('/available', getAllCurrentBooks);        // Get available books (not checked out)
 router.get('/overdue', getOverduePatrons);           // Get patrons with overdue books
 router.get('/checked-out', getCheckedOutBooks);      // Get books currently checked out

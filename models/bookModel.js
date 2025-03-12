@@ -7,6 +7,41 @@ export const allBooks = async () => {
     return await executeQuery(query);
 }
 
+//add book
+export const addBook = async (title, authorNames, categoryId) => {
+    try {
+        // Ensure authorNames is always an array
+        if (!Array.isArray(authorNames)) {
+            authorNames = [authorNames];
+        }
+        console.log('Request Body:', { title, authorNames, categoryId });
+        // Add the book
+        const bookQuery = `INSERT INTO book (title, categoryid) VALUES (?, ?)`;
+        const bookResult = await executeQuery(bookQuery, [title, categoryId]);
+        const bookId = bookResult.insertId;
+
+        // Handle authors
+        const bookAuthorQuery = `INSERT INTO book_author (bookid, authorid) VALUES (?, ?)`;
+        for (const authorName of authorNames) {
+            let authorResult = await executeQuery("SELECT id FROM author WHERE name = ?", [authorName]);
+            if (authorResult.length === 0) {
+                // If author doesn't exist, add them
+                const authorInsertResult = await executeQuery("INSERT INTO author (name) VALUES (?)", [authorName]);
+                authorResult = [{ id: authorInsertResult.insertId }];
+            }
+            const authorId = authorResult[0].id;
+            await executeQuery(bookAuthorQuery, [bookId, authorId]);
+        }
+
+        return { message: "Book added successfully", bookId };
+    } catch (error) {
+        console.error("Error adding book:", error);
+        throw error;
+    }
+};
+
+
+
 // Find all books currently available (not checked out)
 export const findAllCurrentBooks = async () => {
     console.log('triggered');
