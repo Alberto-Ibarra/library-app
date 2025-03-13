@@ -16,12 +16,23 @@ export const listAllBookCopies = async () => {
     return await executeQuery(query);
 };
 
-// Add a new copy of a book
-export const addBookCopy = async (bookId, yearPublished) => {
-    const query = 
-        "INSERT INTO book_copy (bookid, yearpublished) VALUES (?, ?)";
-    return await executeQuery(query, [bookId, yearPublished]);
+
+// Add a new book copy
+export const addBookCopy = async (yearPublished, bookId, bookCondition, location, isAvailable = true) => {
+    try {
+        const copyQuery = `
+            INSERT INTO book_copy (yearpublished, bookid, bookcondition, location, isavailable) 
+            VALUES (?, ?, ?, ?, ?)`;
+        
+        const result = await executeQuery(copyQuery, [yearPublished, bookId, bookCondition, location, isAvailable]);
+        
+        return { message: "Book copy added successfully", copyId: result.insertId };
+    } catch (error) {
+        console.error("Error adding book copy:", error);
+        throw error;
+    }
 };
+
 
 // Remove a copy of a book (if it’s not checked out)
 export const removeBookCopy = async (bookCopyId) => {

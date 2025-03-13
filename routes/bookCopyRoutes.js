@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllBookCopies, createBookCopy, deleteBookCopy } from '../controllers/bookCopyController.js';
+import { getAllBookCopies, addNewBookCopy, deleteBookCopy } from '../controllers/bookCopyController.js';
 
 const router = express.Router();
 
@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/copies', getAllBookCopies);
 
 // Add a new book copy
-router.post('/copies', createBookCopy);
+router.post('/copies', addNewBookCopy);
 
 // Delete a book copy by ID
 router.delete('/copies/:id', deleteBookCopy);

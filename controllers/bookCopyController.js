@@ -12,19 +12,26 @@ export const getAllBookCopies = async (req, res) => {
 };
 
 // Add a new book copy
-export const createBookCopy = async (req, res) => {
+export const addNewBookCopy = async (req, res) => {
     try {
-        const { bookId, yearPublished, condition } = req.body;
+        const { yearPublished, bookId, bookCondition, location, isAvailable } = req.body;
 
-        if (!bookId || !yearPublished || !condition) {
-            return res.status(400).json({ message: 'Missing required fields.' });
+        // Validate required fields
+        if (!yearPublished || !bookId || !bookCondition || !location) {
+            return res.status(400).json({ message: "Missing required fields." });
         }
 
-        const newCopy = await addBookCopy(bookId, yearPublished, condition);
-        res.status(201).json({ message: 'Book copy added successfully.', copy: newCopy });
+        const validConditions = ['New', 'Good', 'Fair', 'Poor'];
+        if (!validConditions.includes(bookCondition)) {
+            return res.status(400).json({ message: "Invalid book condition." });
+        }
+
+        const result = await addBookCopy(yearPublished, bookId, bookCondition, location, isAvailable);
+
+        res.status(201).json(result);
     } catch (error) {
-        console.error('Error adding book copy:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        console.error("Error adding new book copy:", error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 };
 
