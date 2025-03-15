@@ -1,4 +1,9 @@
-import { listAllBookCopies, addBookCopy, removeBookCopy } from '../models/bookCopyModel.js';
+import { listAllBookCopies,
+    addBookCopy,
+    removeBookCopy,
+    findAvailableCopies,
+    findCheckedOutCopies,
+    findCopiesOnHold } from '../models/bookCopyModel.js';
 
 // Get all book copies
 export const getAllBookCopies = async (req, res) => {
@@ -53,6 +58,39 @@ export const deleteBookCopy = async (req, res) => {
         res.status(200).json({ message: 'Book copy deleted successfully.' });
     } catch (error) {
         console.error('Error deleting book copy:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+// Get all currently available books (not checked out)
+export const getAllAvailableCopies = async (req, res) => {
+    try {
+        const availableBooks = await findAvailableCopies();
+        res.status(200).json(availableBooks);
+    } catch (error) {
+        console.error('Error fetching available books:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+// Get books currently checked out
+export const getCheckedOutCopies = async (req, res) => {
+    try {
+        const checkedOutBooks = await findCheckedOutCopies();
+        res.status(200).json(checkedOutBooks);
+    } catch (error) {
+        console.error('Error fetching checked-out books:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+// Get all books currently on hold (with patron and copy details)
+export const findCopiesOnHold = async (req, res) => {
+    try {
+        const onHoldBooks = await booksOnHold();
+        res.status(200).json(onHoldBooks);
+    } catch (error) {
+        console.error('Error fetching books on hold:', error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };

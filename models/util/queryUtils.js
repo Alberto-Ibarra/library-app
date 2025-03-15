@@ -1,4 +1,4 @@
-import pool from '../../database.js';
+import pool from '../../services/database.js';
 
 const executeQuery = async (query, params = []) => {
     try {

@@ -1,15 +1,19 @@
 import express from 'express';
-import { getAllBookCopies, addNewBookCopy, deleteBookCopy } from '../controllers/bookCopyController.js';
+import { getAllBookCopies,
+    addNewBookCopy,
+    deleteBookCopy,
+    getAllAvailableCopies,
+    getCheckedOutCopies,
+    findCopiesOnHold} from '../controllers/bookCopyController.js';
 
 const router = express.Router();
 
-// Get all book copies
 router.get('/copies', getAllBookCopies);
-
-// Add a new book copy
 router.post('/copies', addNewBookCopy);
-
-// Delete a book copy by ID
 router.delete('/copies/:id', deleteBookCopy);
+router.get('/available', getAllAvailableCopies);
+router.get('/checkedout', getCheckedOutCopies);
+router.get('/onhold', findCopiesOnHold);
+
 
 export default router;
