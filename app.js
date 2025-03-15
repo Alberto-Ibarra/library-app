@@ -2,6 +2,7 @@ import express from 'express';
 import bookRoutes from './routes/bookRoutes.js'
 import bookCopyRoutes from './routes/bookCopyRoutes.js'
 import patronRoutes from './routes/patronRoutes.js'
+import checkOutReturnRoutes from './routes/checkOutReturnRoutes.js'
 
 const app = express();
 const port = 3000;
@@ -17,6 +18,7 @@ app.get('/bookvault', (req, res) => {
 app.use('/', bookRoutes)
 app.use('/', bookCopyRoutes)
 app.use('/', patronRoutes)
+app.use('/', checkOutReturnRoutes)
 
 // Start the server
 app.listen(port, () => {

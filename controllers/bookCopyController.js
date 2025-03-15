@@ -85,9 +85,9 @@ export const getCheckedOutCopies = async (req, res) => {
 };
 
 // Get all books currently on hold (with patron and copy details)
-export const findCopiesOnHold = async (req, res) => {
+export const copiesOnHold = async (req, res) => {
     try {
-        const onHoldBooks = await booksOnHold();
+        const onHoldBooks = await findCopiesOnHold();
         res.status(200).json(onHoldBooks);
     } catch (error) {
         console.error('Error fetching books on hold:', error);
