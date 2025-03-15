@@ -17,6 +17,9 @@ export const createPatronAccount = async (pin, firstname, lastname, email, statu
 
 // Activate a patron account
 export const activatePatronAccount = async (patronId) => {
+    console.log('model triggered');
+    console.log(patronId);
+    
     const query = 
         "UPDATE patron_account " +
         "SET status = 'Active' " +
@@ -42,11 +45,11 @@ export const getAllActivePatrons = async () => {
     return await executeQuery(query);
 };
 
-// Update patron information (e.g., email change)
-export const updatePatronEmail = async (patronId, newEmail) => {
+// Update patron information
+export const updatePatron = async (patronId, pin, firstname, lastname, email) => {
     const query = 
         "UPDATE patron_account " +
-        "SET email = ? " +
+        "SET pin = ?, firstname = ?, lastname = ?, email = ?" +
         "WHERE id = ?";
-    return await executeQuery(query, [newEmail, patronId]);
+    return await executeQuery(query, [pin, firstname, lastname, email, patronId]);
 };

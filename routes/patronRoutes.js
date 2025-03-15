@@ -1,9 +1,12 @@
 import express from 'express'
-import { addNewPatron } from '../controllers/patronController.js';
+import { addNewPatron, activatePatron, suspendPatron, allActivePatrons, updateP } from '../controllers/patronController.js';
 
 const router = express.Router()
-console.log("routes triggered");
 
 router.post('/addpatron', addNewPatron)
+router.put('/activatepatron/:id', activatePatron)
+router.put('/suspendpatron/:id', suspendPatron)
+router.get('/patrons', allActivePatrons)
+router.put('/updatePatron/:id', updateP)
 
 export default router
