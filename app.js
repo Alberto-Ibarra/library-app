@@ -3,6 +3,7 @@ import bookRoutes from './routes/bookRoutes.js'
 import bookCopyRoutes from './routes/bookCopyRoutes.js'
 import patronRoutes from './routes/patronRoutes.js'
 import checkOutReturnRoutes from './routes/checkOutReturnRoutes.js'
+import notificationRoutes from './routes/notificationRoutes.js'
 
 const app = express();
 const port = 3000;
@@ -11,14 +12,15 @@ const port = 3000;
 app.use(express.json());
 
 // Routes
-app.get('/bookvault', (req, res) => {
+app.get('/', (req, res) => {
     res.send('Welcome to the Library Management System!');
 });
 
-app.use('/', bookRoutes)
-app.use('/', bookCopyRoutes)
-app.use('/', patronRoutes)
-app.use('/', checkOutReturnRoutes)
+app.use('/api/books', bookRoutes)
+app.use('/api/bookcopies', bookCopyRoutes)
+app.use('/api/patrons', patronRoutes)
+app.use('/api/checkout', checkOutReturnRoutes)
+app.use('/api/notifications', notificationRoutes)
 
 // Start the server
 app.listen(port, () => {

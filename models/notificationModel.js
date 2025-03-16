@@ -1,12 +1,13 @@
-import executeQuery from './util/queryUtils.js';\
+import executeQuery from './util/queryUtils.js';
 
 // Send a notification (e.g., Overdue Alert)
-export const sendNotification = async (type, patronId) => {
+export const createNotification = async (type, patronId, message) => {
     const query = 
-        "INSERT INTO notification (sentat, type, patronaccountid) " +
-        "VALUES (NOW(), ?, ?)";
-    return await executeQuery(query, [type, patronId]);
+        "INSERT INTO notification (sentat, type, message, patronaccountid) " +
+        "VALUES (NOW(), ?, ?, ?)";
+    return await executeQuery(query, [type, message, patronId]);
 };
+
 
 // Get all notifications for a patron
 export const getPatronNotifications = async (patronId) => {
