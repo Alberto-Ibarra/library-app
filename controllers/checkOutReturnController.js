@@ -15,3 +15,18 @@ export const checkout = async (req, res) => {
         console.error(error)
     }
 }
+
+export const returnB = async (req, res) => {
+    try {
+        const {checkOutId, patronId} = req.params
+
+        if (!checkOutId || !patronId) {
+            return res.status(400).json({ message: "Missing parameters." });
+        }
+        const result = await(returnBook(checkOutId, patronId))
+        const now = new Date();
+        res.status(200).json({message: 'Book returned: ' + now})
+    } catch (error) {
+        console.error(error)
+    }
+}
