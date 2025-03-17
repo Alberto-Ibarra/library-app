@@ -4,6 +4,7 @@ import bookCopyRoutes from './routes/bookCopyRoutes.js'
 import patronRoutes from './routes/patronRoutes.js'
 import checkOutReturnRoutes from './routes/checkOutReturnRoutes.js'
 import notificationRoutes from './routes/notificationRoutes.js'
+import holdRoutes from './routes/holdRoutes.js'
 
 const app = express();
 const port = 3000;
@@ -21,6 +22,7 @@ app.use('/api/bookcopies', bookCopyRoutes)
 app.use('/api/patrons', patronRoutes)
 app.use('/api/checkout', checkOutReturnRoutes)
 app.use('/api/notifications', notificationRoutes)
+app.use('/api/hold', holdRoutes)
 
 // Start the server
 app.listen(port, () => {
