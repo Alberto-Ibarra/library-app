@@ -4,9 +4,7 @@ import executeQuery from './util/queryUtils.js';
 // Create a patron
 export const createPatronAccount = async (pin, firstname, lastname, email, status) => {
     try {
-        console.log('model');
-        
-        const addPatron = "INSERT INTO patron_account (pin, firstname, lastname, email, status) VALUES (?, ?, ?, ?, ?)"
+        const addPatron = "INSERT INTO patron_account (pin, firstname, lastname, email, status) VALUES (?, ?, ?, ?, 'Active')"
         const result = await executeQuery(addPatron, [pin, firstname,lastname, email, status])
         return { message: "patron added successfully", result };
     } catch (error) {

@@ -6,9 +6,12 @@ import { createPatronAccount,
 
 export const addNewPatron = async (req, res) => {
     try {
-        console.log('controller');
-        
         const {pin, firstname, lastname, email, status} = req.body
+
+        if (!pin?.trim() || !firstname?.trim() || !lastname?.trim() || !email?.trim()) {
+            return res.status(400).json({ message: "Missing required fields." });
+        }
+
         const patron = await createPatronAccount(pin, firstname, lastname, email, status)
         res.status(200).json(patron)
     } catch (error) {
@@ -19,8 +22,6 @@ export const addNewPatron = async (req, res) => {
 
 export const activatePatron = async (req, res)=> {
     try {
-        console.log('controller triggered');
-        
         const {id} = req.params
         const active = await activatePatronAccount(id)
         res.status(200).json(active)
@@ -31,8 +32,6 @@ export const activatePatron = async (req, res)=> {
 
 export const suspendPatron = async (req, res) => {
     try {
-        console.log('suspend patron');
-        
         const {id} = req.params
         const suspend = await suspendPatronAccount(id)
         res.status(200).json({message: "Account suspended"})
@@ -54,6 +53,11 @@ export const updateP = async (req, res) => {
     try {
         const {pin, firstname, lastname, email} = req.body
         const {id} = req.params
+
+        if (!pin?.trim() || !firstname?.trim() || !lastname?.trim() || !email?.trim()) {
+            return res.status(400).json({ message: "Missing required fields." });
+        }
+
         const updateResult = await updatePatron(id, pin, firstname, lastname, email)
         res.status(200).json({message: "Patron updated"})
     } catch (error) {
