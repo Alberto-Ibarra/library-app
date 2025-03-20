@@ -12,12 +12,16 @@ import authRoutes from './routes/authRoutes.js'
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+console.log('Initializing app...');  // Add log here
+
 // Enable CORS for specific domains
 const corsOptions = {
     origin: ["http://localhost:5173", "https://yourfrontend.com"], // Adjust this based on frontend URL
     methods: "GET,POST,PUT,DELETE",
     allowedHeaders: "Content-Type,Authorization",
 };
+
+console.log('CORS setup...');  // Add log here
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -30,18 +34,22 @@ app.use(express.json());
 //     authenticateToken(req, res, next);
 // });
 
-// Routes
+console.log('Middleware setup completed...');  // Add log here
+
 app.get('/', (req, res) => {
     res.send('Welcome to the Library Management System!');
 });
 
-app.use('/api/books', bookRoutes)
-app.use('/api/bookcopies', bookCopyRoutes)
-app.use('/api/patrons', patronRoutes)
-app.use('/api/checkout', checkOutReturnRoutes)
-app.use('/api/notifications', notificationRoutes)
-app.use('/api/hold', holdRoutes)
-app.use('/api/auth', authRoutes)
+console.log('Routes set up...');  // Add log here
 
-// Start the server
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.use('/api/books', bookRoutes);
+app.use('/api/bookcopies', bookCopyRoutes);
+app.use('/api/patrons', patronRoutes);
+app.use('/api/checkout', checkOutReturnRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/hold', holdRoutes);
+app.use('/api/auth', authRoutes);
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});

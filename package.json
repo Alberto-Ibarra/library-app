@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo 'Build script: No actual build step for now'"
+    "build": "echo 'Building the app...'; npm install; echo 'Build completed'"
   },
   "keywords": [],
   "author": "",
