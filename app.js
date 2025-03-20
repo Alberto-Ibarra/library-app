@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import { authenticateToken } from "./middleware/authMiddleware.js";
 import bookRoutes from './routes/bookRoutes.js'
 import bookCopyRoutes from './routes/bookCopyRoutes.js'
 import patronRoutes from './routes/patronRoutes.js'
@@ -20,6 +21,14 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+// Apply authentication middleware to protect all routes except login & register
+app.use((req, res, next) => {
+    if (req.path === "/login" || req.path === "/register") {
+        return next();
+    }
+    authenticateToken(req, res, next);
+});
 
 // Routes
 app.get('/', (req, res) => {
