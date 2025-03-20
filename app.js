@@ -10,7 +10,7 @@ import holdRoutes from './routes/holdRoutes.js'
 import authRoutes from './routes/authRoutes.js'
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Enable CORS for specific domains
 const corsOptions = {
@@ -44,6 +44,4 @@ app.use('/api/hold', holdRoutes)
 app.use('/api/auth', authRoutes)
 
 // Start the server
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
