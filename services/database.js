@@ -10,19 +10,19 @@ const pool = mysql.createPool({
     database: process.env.MYSQL_DATABASE
 }).promise()
 
-async function testDB() {
-    try {
-        console.log("🔄 Connecting to MySQL...");
-        const connection = await pool.getConnection();
-        console.log("✅ Connected to MySQL!");
-        const [rows] = await connection.execute("SHOW TABLES;");
-        console.log("📊 Tables:", rows);
-        connection.release();
-    } catch (err) {
-        console.error("❌ Database Connection Failed:", err.message);
-    }
-}
+// async function testDB() {
+//     try {
+//         console.log("🔄 Connecting to MySQL...");
+//         const connection = await pool.getConnection();
+//         console.log("✅ Connected to MySQL!");
+//         const [rows] = await connection.execute("SHOW TABLES;");
+//         console.log("📊 Tables:", rows);
+//         connection.release();
+//     } catch (err) {
+//         console.error("❌ Database Connection Failed:", err.message);
+//     }
+// }
 
-testDB();
+// testDB();
 
 export default pool
