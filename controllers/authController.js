@@ -21,7 +21,7 @@ export const updateUserById = async (req, res) => {
         }
 
         const updateResult = await updateUser(id, role, firstname, lastname, email)
-        res.status(200).json({message: "User updated"})
+        res.status(200).json({updateResult})
     } catch (error) {
         console.error(error)
     }
