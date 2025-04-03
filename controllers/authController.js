@@ -20,8 +20,8 @@ export const updateUserById = async (req, res) => {
             return res.status(400).json({ message: "Missing required fields." });
         }
 
-        const updateResult = await updateUser(id, role, firstname, lastname, email)
-        res.status(200).json({id, role, firstname, lastname, role})
+        const updatedUser = await updateUser(id, role, firstname, lastname, email);
+        res.status(200).json(updatedUser);
     } catch (error) {
         console.error(error)
     }
