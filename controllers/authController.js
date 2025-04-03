@@ -1,4 +1,4 @@
-import { allUsers, registerUser, findUserByEmail } from "../models/userModel.js";
+import { allUsers, registerUser, findUserByEmail, updateUser } from "../models/userModel.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -6,6 +6,22 @@ export const getAllUsers = async (req, res) => {
     try {
         const result = await allUsers()
         res.status(200).json(result)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const updateUserById = async (req, res) => {
+    try {
+        const {role, firstname, lastname, email} = req.body
+        const {id} = req.params
+
+        if (!role?.trim() || !firstname?.trim() || !lastname?.trim() || !email?.trim()) {
+            return res.status(400).json({ message: "Missing required fields." });
+        }
+
+        const updateResult = await updateUser(id, role, firstname, lastname, email)
+        res.status(200).json({message: "User updated"})
     } catch (error) {
         console.error(error)
     }

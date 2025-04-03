@@ -19,3 +19,12 @@ export const findUserByEmail= async (email) => {
     const result = await executeQuery(query, [email]);
     return result.length > 0 ? result[0] : null;
 };
+
+// Update user
+export const updateUser = async (id, email, firstname, lastname, role) => {
+    const query = 
+        "UPDATE user " +
+        "SET role = ?, firstname = ?, lastname = ?, email = ?" +
+        "WHERE id = ?";
+    return await executeQuery(query, [id, firstname, lastname, email, role]);
+};
