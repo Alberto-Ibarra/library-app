@@ -37,7 +37,7 @@ export const suspendPatronAccount = async (patronId) => {
 // Get a list of all active patrons
 export const getAllActivePatrons = async () => {
     const query = 
-        "SELECT firstname, lastname, email " +
+        "SELECT id, firstname, lastname, email, status " +
         "FROM patron_account " +
         "WHERE status = 'Active'";
     return await executeQuery(query);
