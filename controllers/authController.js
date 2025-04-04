@@ -13,8 +13,8 @@ export const getAllUsers = async (req, res) => {
 
 export const updateUserById = async (req, res) => {
     try {
-        const {role, firstname, lastname, email} = req.body
-        const {id} = req.params
+        const {id, role, firstname, lastname, email} = req.body
+        // const {id} = req.params
 
         if (!role?.trim() || !firstname?.trim() || !lastname?.trim() || !email?.trim()) {
             return res.status(400).json({ message: "Missing required fields." });

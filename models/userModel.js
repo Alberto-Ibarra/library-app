@@ -23,10 +23,7 @@ export const findUserByEmail= async (email) => {
 // Update user
 export const updateUser = async (id, email, firstname, lastname, role) => {
     const query = 
-        "UPDATE user " +
-        "SET role = ?, firstname = ?, lastname = ?, email = ? " +
-        "WHERE id = ?";
-    
-    // Make sure the parameters are in the correct order
+        "UPDATE user SET role = ?, firstname = ?, lastname = ?, email = ? WHERE id = ?";
     return await executeQuery(query, [role, firstname, lastname, email, id]);
 };
+
