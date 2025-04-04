@@ -5,7 +5,8 @@ import {
     booksCheckedOutByPatron,
     booksByAuthor,
     patronsOnWaitList,
-    countOfPatronsForABook
+    countOfPatronsForABook,
+    deleteBookById
 } from '../models/bookModel.js';
 
 // Get all books
@@ -94,3 +95,14 @@ export const getCountOfPatronsForBook = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };
+
+// Delete book by id
+export const deleteBook = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleteBook = await deleteBookById(id);
+        res.status(200).json(deleteBook);
+    } catch (error) {
+        console.error(error)
+    }
+}

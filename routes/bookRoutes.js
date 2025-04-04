@@ -6,7 +6,8 @@ import {
     getBooksCheckedOutByPatron,
     getBooksByAuthor,
     getPatronsOnWaitList,
-    getCountOfPatronsForBook
+    getCountOfPatronsForBook,
+    deleteBook
 } from '../controllers/bookController.js';
 
 const router = express.Router();
@@ -19,5 +20,6 @@ router.get('/patron/:id', getBooksCheckedOutByPatron);
 router.get('/author/:authorName', getBooksByAuthor);
 router.get('/waitlist', getPatronsOnWaitList); 
 router.get('/waitlist/:title', getCountOfPatronsForBook); 
+router.delete('/book/:id', deleteBook);
 
 export default router;

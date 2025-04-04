@@ -91,3 +91,11 @@ export const countOfPatronsForABook = async () => {
         "WHERE b.title = 'Harry Potter and the Philosopher''s Stone'"
     return await executeQuery(query);
 };
+
+
+export const deleteBookById = async (id) => {
+    const query = 
+        "DELETE FROM book WHERE id = ?";
+        const numericId = parseInt(id,10);
+        return await executeQuery(query, [numericId]);
+}
