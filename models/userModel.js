@@ -24,14 +24,14 @@ export const findUserByEmail= async (email) => {
 export const updateUser = async (id, role, firstname, lastname, email) => {
     const query = 
         "UPDATE user SET role = ?, firstname = ?, lastname = ?, email = ? WHERE id = ?";
-
-    // Ensure id is a number
     const numericId = parseInt(id, 10);
-
-    console.log("Executing query with values:", [role, firstname, lastname, email, numericId]);
-
     return await executeQuery(query, [role, firstname, lastname, email, numericId]);
 };
 
-
+export const deleteUserById = async (id) => {
+    const query = 
+        "DELETE FROM user WHERE id = ?";
+        const numericId = parseInt(id,10);
+        return await executeQuery(query, [numericId]);
+}
 

@@ -1,4 +1,4 @@
-import { allUsers, registerUser, findUserByEmail, updateUser } from "../models/userModel.js";
+import { allUsers, registerUser, findUserByEmail, updateUser, deleteUserById } from "../models/userModel.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -28,7 +28,15 @@ export const updateUserById = async (req, res) => {
     }
 };
 
-
+export const deleteUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleteUser = await deleteUserById(id);
+        res.status(200).json(deleteUser);
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 // Register a new user
 export const register = async (req, res) => {
