@@ -13,19 +13,28 @@ export const getAllUsers = async (req, res) => {
 
 export const updateUserById = async (req, res) => {
     try {
-        const {id, role, firstname, lastname, email} = req.body
-        // const {id} = req.params
+        const { role, firstname, lastname, email } = req.body;
+        const { id } = req.params;
 
         if (!role?.trim() || !firstname?.trim() || !lastname?.trim() || !email?.trim()) {
             return res.status(400).json({ message: "Missing required fields." });
         }
 
-        const updatedUser = await updateUser(id, role, firstname, lastname, email);
-        res.status(200).json(updatedUser);
+        const updateResult = await updateUser(id, email, firstname, lastname, role);
+
+        console.log("Update query result:", updateResult); // Debug log
+
+        if (!updateResult || updateResult.affectedRows === 0) {
+            return res.status(404).json({ message: "User not found or no changes made." });
+        }
+
+        res.status(200).json({ id, role, firstname, lastname, email });
     } catch (error) {
-        console.error(error)
+        console.error("Error updating user:", error);
+        res.status(500).json({ message: "Internal server error" });
     }
-}
+};
+
 
 // Register a new user
 export const register = async (req, res) => {

@@ -21,9 +21,13 @@ export const findUserByEmail= async (email) => {
 };
 
 // Update user
-export const updateUser = async (id, email, firstname, lastname, role) => {
+export const updateUser = async (role, firstname, lastname, email, id) => {
     const query = 
         "UPDATE user SET role = ?, firstname = ?, lastname = ?, email = ? WHERE id = ?";
+    
+    console.log("Executing query:", query, [role, firstname, lastname, email, id]);
+
     return await executeQuery(query, [role, firstname, lastname, email, id]);
 };
+
 
