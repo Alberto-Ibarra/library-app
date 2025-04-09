@@ -4,7 +4,7 @@ import executeQuery from './util/queryUtils.js';
 //find all books
 export const allBooks = async () => {
     const query = "SELECT " +
-                "b.bookid as bookid, " + 
+                "b.id as bookid, " + 
                 "b.title as title, " +
                 "a.name as authorname, " + 
                 "c.title as category " + 
