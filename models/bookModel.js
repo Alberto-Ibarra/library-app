@@ -3,7 +3,9 @@ import executeQuery from './util/queryUtils.js';
 
 //find all books
 export const allBooks = async () => {
-    const query = "SELECT * FROM book";
+    const query = "SELECT * FROM book" +
+                "JOIN book_author ba ON b.id = ba.bookid " +
+                "JOIN author a ON ba.authorid = a.id ";
     return await executeQuery(query);
 }
 
