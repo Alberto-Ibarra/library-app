@@ -1,5 +1,10 @@
 import express from 'express'
-import { addNewPatron, activatePatron, suspendPatron, allActivePatrons, updateP, allPatrons } from '../controllers/patronController.js';
+import { addNewPatron,
+        activatePatron, 
+        suspendPatron, 
+        // allActivePatrons, 
+        updateP, allPatrons 
+    } from '../controllers/patronController.js';
 
 const router = express.Router()
 

@@ -1,7 +1,7 @@
 import { createPatronAccount,
     activatePatronAccount, 
     suspendPatronAccount, 
-    getAllActivePatrons,
+    // getAllActivePatrons,
     updatePatron,
     getAllPatrons
 } from "../models/patronAccountModel.js";
