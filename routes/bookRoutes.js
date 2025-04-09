@@ -7,13 +7,15 @@ import {
     getBooksByAuthor,
     getPatronsOnWaitList,
     getCountOfPatronsForBook,
-    deleteBook
+    deleteBook,
+    getAllCategories
 } from '../controllers/bookController.js';
 
 const router = express.Router();
 
 // Book Routes
 router.get('/books', getAllBooks);
+router.get('/categories', getAllCategories);
 router.post('/addBook', addNewBook);
 router.get('/overdue', getOverduePatrons);
 router.get('/patron/:id', getBooksCheckedOutByPatron);

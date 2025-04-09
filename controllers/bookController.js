@@ -6,7 +6,8 @@ import {
     booksByAuthor,
     patronsOnWaitList,
     countOfPatronsForABook,
-    deleteBookById
+    deleteBookById,
+    allCategories
 } from '../models/bookModel.js';
 
 // Get all books
@@ -19,6 +20,15 @@ export const getAllBooks = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };
+
+export const getAllCategories = async (req, res) => {
+    try {
+        const categories = await allCategories();
+        res.status(200).json(categories)
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 // Add a new book
 export const addNewBook = async (req, res) => {

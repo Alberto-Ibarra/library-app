@@ -7,6 +7,11 @@ export const allBooks = async () => {
     return await executeQuery(query);
 }
 
+export const allCategories = async () => {
+    const query = "SELECT * FROM category";
+    return await executeQuery(query);
+}
+
 //add book
 export const addBook = async (title, authorNames, categoryId) => {
     try {
