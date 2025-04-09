@@ -8,7 +8,8 @@ import {
     getPatronsOnWaitList,
     getCountOfPatronsForBook,
     deleteBook,
-    getAllCategories
+    getAllCategories,
+    getAuthorSuggestions
 } from '../controllers/bookController.js';
 
 const router = express.Router();
@@ -16,6 +17,7 @@ const router = express.Router();
 // Book Routes
 router.get('/books', getAllBooks);
 router.get('/categories', getAllCategories);
+router.get('/authors/search', getAuthorSuggestions);
 router.post('/addBook', addNewBook);
 router.get('/overdue', getOverduePatrons);
 router.get('/patron/:id', getBooksCheckedOutByPatron);

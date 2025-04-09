@@ -7,10 +7,17 @@ export const allBooks = async () => {
     return await executeQuery(query);
 }
 
+//find all categories
 export const allCategories = async () => {
     const query = "SELECT * FROM category";
     return await executeQuery(query);
 }
+
+// Find authors by partial name (for search)
+export const searchAuthors = async (searchTerm) => {
+    const query = "SELECT id, name FROM authors WHERE name LIKE ? LIMIT 10";
+    return await executeQuery(query, [`%${searchTerm}%`]);
+};
 
 //add book
 export const addBook = async (title, authorNames, categoryId) => {

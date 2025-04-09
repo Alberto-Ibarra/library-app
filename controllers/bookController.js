@@ -7,7 +7,8 @@ import {
     patronsOnWaitList,
     countOfPatronsForABook,
     deleteBookById,
-    allCategories
+    allCategories,
+    searchAuthors
 } from '../models/bookModel.js';
 
 // Get all books
@@ -29,6 +30,22 @@ export const getAllCategories = async (req, res) => {
         console.error(error);
     }
 }
+
+export const getAuthorSuggestions = async (req, res) => {
+    try {
+        const { q } = req.query;
+
+        if (!q || q.trim() === '') {
+            return res.status(400).json({ message: 'Missing search query.' });
+        }
+
+        const authors = await searchAuthors(q.trim());
+        return res.status(200).json(authors);
+    } catch (error) {
+        console.error('Error fetching authors:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
 
 // Add a new book
 export const addNewBook = async (req, res) => {
