@@ -7,7 +7,7 @@ export const allBooks = async () => {
                 "b.bookid as bookid, " + 
                 "b.title as title, " +
                 "a.name as authorname, " + 
-                "c.title as category "
+                "c.title as category " + 
                 "FROM book b " +
                 "JOIN book_author ba ON b.id = ba.bookid " +
                 "JOIN author a ON ba.authorid = a.id "
