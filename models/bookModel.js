@@ -3,7 +3,12 @@ import executeQuery from './util/queryUtils.js';
 
 //find all books
 export const allBooks = async () => {
-    const query = "SELECT * FROM book b " +
+    const query = "SELECT " +
+                "b.bookid as bookid, " + 
+                "b.title as title, " +
+                "a.name as authorname, " + 
+                "c.title as category "
+                "FROM book b " +
                 "JOIN book_author ba ON b.id = ba.bookid " +
                 "JOIN author a ON ba.authorid = a.id "
                 "JOIN category c ON b.categoryid = c.id";
