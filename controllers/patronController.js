@@ -2,7 +2,9 @@ import { createPatronAccount,
     activatePatronAccount, 
     suspendPatronAccount, 
     getAllActivePatrons,
-    updatePatron} from "../models/patronAccountModel.js";
+    updatePatron,
+    getAllPatrons
+} from "../models/patronAccountModel.js";
 
 export const addNewPatron = async (req, res) => {
     try {
@@ -40,9 +42,18 @@ export const suspendPatron = async (req, res) => {
     }
 }
 
-export const allActivePatrons = async (req, res) => {
+// export const allActivePatrons = async (req, res) => {
+//     try {
+//         const result = await getAllActivePatrons()
+//         res.status(200).json(result)
+//     } catch (error) {
+//         console.error(error)
+//     }
+// }
+
+export const allPatrons = async (req, res) => {
     try {
-        const result = await getAllActivePatrons()
+        const result = await getAllPatrons()
         res.status(200).json(result)
     } catch (error) {
         console.error(error)

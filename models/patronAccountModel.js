@@ -35,11 +35,19 @@ export const suspendPatronAccount = async (patronId) => {
 };
 
 // Get a list of all active patrons
-export const getAllActivePatrons = async () => {
+// export const getAllActivePatrons = async () => {
+//     const query = 
+//         "SELECT id, firstname, lastname, email, status " +
+//         "FROM patron_account " +
+//         "WHERE status = 'Active'";
+//     return await executeQuery(query);
+// };
+
+// Get a list of all active patrons
+export const getAllPatrons = async () => {
     const query = 
         "SELECT id, firstname, lastname, email, status " +
-        "FROM patron_account " +
-        "WHERE status = 'Active'";
+        "FROM patron_account "
     return await executeQuery(query);
 };
 
