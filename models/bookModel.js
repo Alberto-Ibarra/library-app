@@ -15,7 +15,7 @@ export const allCategories = async () => {
 
 // Find authors by partial name (for search)
 export const searchAuthors = async (searchTerm) => {
-    const query = "SELECT id, name FROM authors WHERE name LIKE ? LIMIT 10";
+    const query = "SELECT id, name FROM author WHERE name LIKE ? LIMIT 10";
     return await executeQuery(query, [`%${searchTerm}%`]);
 };
 
