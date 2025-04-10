@@ -3,7 +3,9 @@ import { listAllBookCopies,
     removeBookCopy,
     findAvailableCopies,
     findCheckedOutCopies,
-    findCopiesOnHold } from '../models/bookCopyModel.js';
+    findCopiesOnHold,
+    editBookCopy
+} from '../models/bookCopyModel.js';
 
 // Get all book copies
 export const getAllBookCopies = async (req, res) => {
@@ -44,6 +46,34 @@ export const addNewBookCopy = async (req, res) => {
     }
 };
 
+// Edit an existing book copy
+export const updateBookCopy = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { bookcondition, location} = req.body;
+
+        if (!id) {
+            return res.status(400).json({ message: 'Book copy ID is required.' });
+        }
+
+        const validConditions = ['New', 'Good', 'Fair', 'Poor'];
+        const bookconditionTrimmed = (bookcondition || '').trim();
+
+        if (!bookconditionTrimmed || !location) {
+            return res.status(400).json({ message: 'Missing required fields.' });
+        }
+
+        if (!validConditions.includes(bookconditionTrimmed)) {
+            return res.status(400).json({ message: 'Invalid book condition.' });
+        }
+
+        const result = await editBookCopy(id, bookconditionTrimmed, location);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error('Error updating book copy:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
 
 
 // Remove a book copy by ID

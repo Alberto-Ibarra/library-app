@@ -35,6 +35,21 @@ export const addBookCopy = async (bookid, bookcondition, location, isavailable =
     }
 };
 
+// Edit a book copy
+export const editBookCopy = async (id, bookcondition, location) => {
+    try {
+        const query = `
+            UPDATE book_copy
+            SET bookcondition = ?, location = ?
+            WHERE id = ?
+        `;
+        await executeQuery(query, [bookcondition, location, id]);
+        return { message: "Book copy updated successfully" };
+    } catch (error) {
+        console.error("Error updating book copy:", error);
+        throw error;
+    }
+};
 
 // Remove a copy of a book (if it’s not checked out)
 export const removeBookCopy = async (bookCopyId) => {
