@@ -19,22 +19,22 @@ export const getAllBookCopies = async (req, res) => {
 // Add a new book copy
 export const addNewBookCopy = async (req, res) => {
     try {
-        const { yearPublished, bookId, bookCondition, location, isAvailable } = req.body;
-        console.log(bookId);
-        console.log(bookCondition);
+        const { yearPublished, bookid, bookcondition, location, isAvailable } = req.body;
+        console.log(bookid);
+        console.log(bookcondition);
         console.log(location);
         
         // Validate required fields
-        if (!bookId || !bookCondition || !location) {
+        if (!bookid || !bookcondition || !location) {
             return res.status(400).json({ message: "Missing required fields." });
         }
 
         const validConditions = ['New', 'Good', 'Fair', 'Poor'];
-        if (!validConditions.includes(bookCondition)) {
+        if (!validConditions.includes(bookcondition)) {
             return res.status(400).json({ message: "Invalid book condition." });
         }
 
-        const result = await addBookCopy(yearPublished, bookId, bookCondition, location, isAvailable);
+        const result = await addBookCopy(yearPublished, bookid, bookcondition, location, isAvailable);
 
         res.status(201).json(result);
     } catch (error) {
