@@ -19,13 +19,12 @@ export const getAllBookCopies = async (req, res) => {
 // Add a new book copy
 export const addNewBookCopy = async (req, res) => {
     try {
-        const { yearpublished, bookid, bookcondition, location, isavailable } = req.body;
-        
+        const { bookid, bookcondition, location, isavailable } = req.body;
         console.log('Received Data:', { bookid, bookcondition, location, isavailable });
 
-        // Trim and normalize the book condition
-        const bookconditionTrimmed = (bookcondition || '').trim().charAt(0).toUpperCase() + bookcondition.slice(1).toLowerCase();
-        console.log('Normalized Book Condition:', bookconditionTrimmed);
+        // Ensure book condition is a valid ENUM value
+        const validConditions = ['New', 'Good', 'Fair', 'Poor'];
+        const bookconditionTrimmed = (bookcondition || '').trim();
 
         // Validate required fields
         if (!bookid || !bookconditionTrimmed || !location) {
@@ -33,18 +32,18 @@ export const addNewBookCopy = async (req, res) => {
         }
 
         // Validate book condition
-        const validConditions = ['New', 'Good', 'Fair', 'Poor'];
         if (!validConditions.includes(bookconditionTrimmed)) {
             return res.status(400).json({ message: "Invalid book condition." });
         }
 
-        const result = await addBookCopy(yearpublished, bookid, bookconditionTrimmed, location, isavailable);
+        const result = await addBookCopy(bookid, bookconditionTrimmed, location, isavailable);
         res.status(201).json(result);
     } catch (error) {
         console.error("Error adding new book copy:", error);
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
 
 
 // Remove a book copy by ID
