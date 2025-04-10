@@ -24,19 +24,23 @@ export const addNewBookCopy = async (req, res) => {
 
         // Trim and validate the book condition
         const bookconditionTrimmed = bookcondition.trim();
-
+        console.log('1');
+        
         // Validate required fields
         if (!bookid || !bookconditionTrimmed || !location) {
             return res.status(400).json({ message: "Missing required fields." });
         }
+        console.log('2');
 
         // Validate book condition
         const validConditions = ['New', 'Good', 'Fair', 'Poor'];
         if (!validConditions.includes(bookconditionTrimmed)) {
             return res.status(400).json({ message: "Invalid book condition." });
         }
+        console.log('3');
 
         const result = await addBookCopy(yearpublished, bookid, bookconditionTrimmed, location, isavailable);
+        console.log('4');
 
         res.status(201).json(result);
     } catch (error) {
