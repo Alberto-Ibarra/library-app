@@ -17,13 +17,13 @@ export const listAllBookCopies = async () => {
 };
 
 // Add a new book copy
-export const addBookCopy = async (yearPublished, bookId, bookCondition, location, isAvailable = true) => {
+export const addBookCopy = async (bookId, bookCondition, location, isAvailable = true) => {
     try {
         const copyQuery = `
-            INSERT INTO book_copy (yearpublished, bookid, bookcondition, location, isavailable) 
-            VALUES (?, ?, ?, ?, ?)`;
+            INSERT INTO book_copy (bookid, bookcondition, location, isavailable) 
+            VALUES (?, ?, ?, ?)`;
         
-        const result = await executeQuery(copyQuery, [yearPublished, bookId, bookCondition, location, isAvailable]);
+        const result = await executeQuery(copyQuery, [bookId, bookCondition, location, isAvailable]);
         
         return { message: "Book copy added successfully", copyId: result.insertId };
     } catch (error) {
