@@ -20,7 +20,10 @@ export const getAllBookCopies = async (req, res) => {
 export const addNewBookCopy = async (req, res) => {
     try {
         const { yearPublished, bookId, bookCondition, location, isAvailable } = req.body;
-
+        console.log(bookId);
+        console.log(bookCondition);
+        console.log(location);
+        
         // Validate required fields
         if (!bookId || !bookCondition || !location) {
             return res.status(400).json({ message: "Missing required fields." });
