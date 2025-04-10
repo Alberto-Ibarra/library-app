@@ -38,7 +38,7 @@ export const addNewBookCopy = async (req, res) => {
             return res.status(400).json({ message: "Invalid book condition." });
         }
         console.log('3');
-
+        console.log('Prepared Data for Query:', [bookid, bookconditionTrimmed, location, isavailable]);
         const result = await addBookCopy(yearpublished, bookid, bookconditionTrimmed, location, isavailable);
         console.log('4');
 
