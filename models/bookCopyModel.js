@@ -19,6 +19,9 @@ export const listAllBookCopies = async () => {
 // Add a new book copy
 export const addBookCopy = async (bookid, bookcondition, location, isavailable = true) => {
     try {
+        console.log('from model ');
+        console.log(bookcondition);
+        
         const copyQuery = `
             INSERT INTO book_copy (bookid, bookcondition, location, isavailable) 
             VALUES (?, ?, ?, ?)`;
