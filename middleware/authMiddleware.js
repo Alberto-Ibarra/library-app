@@ -28,11 +28,11 @@ export const verifyAdmin = (req, res, next) => {
     
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET); // your secret
-        console.log(decoded.role);
+        console.log(decoded);
         
         if (decoded.role !== 'Admin') {
-            console.log(decoded.role);
-            res.status(decoded.role)
+            console.log(decoded);
+            res.status(decoded)
             return res.status(403).json({ message: "Access denied. Admins only." });
         }
 
