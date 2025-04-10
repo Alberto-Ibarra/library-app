@@ -22,7 +22,7 @@ export const addNewBookCopy = async (req, res) => {
         const { yearPublished, bookId, bookCondition, location, isAvailable } = req.body;
 
         // Validate required fields
-        if (!yearPublished || !bookId || !bookCondition || !location) {
+        if (!bookId || !bookCondition || !location) {
             return res.status(400).json({ message: "Missing required fields." });
         }
 
