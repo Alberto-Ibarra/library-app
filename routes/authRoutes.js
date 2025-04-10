@@ -1,13 +1,13 @@
 import express from 'express'
 import { getAllUsers, register, login, updateUserById, deleteUser } from "../controllers/authController.js";
-import { authenticateToken } from "../middleware/authMiddleware.js";
+import { authenticateToken, verifyAdmin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.get('/', getAllUsers);
-router.put('/updateuser/:id', updateUserById);
-router.delete('/delete/:id', deleteUser);
-router.post("/register", register);
+router.get('/', verifyAdmin, getAllUsers);
+router.put('/updateuser/:id', verifyAdmin, updateUserById);
+router.delete('/delete/:id', verifyAdmin, deleteUser);
+router.post("/register", verifyAdmin, register);
 router.post("/login", login);
 
 // Example of a protected route
