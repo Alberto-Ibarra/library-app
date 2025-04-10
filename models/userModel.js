@@ -15,7 +15,7 @@ export const registerUser = async (email, password, role, firstname, lastname) =
 
 // Find user by email
 export const findUserByEmail= async (email) => {
-    const query = "SELECT * FROM user WHERE email = ?";
+    const query = "SELECT * FROM `user` WHERE email = ?";
     const result = await executeQuery(query, [email]);
     return result.length > 0 ? result[0] : null;
 };

@@ -71,6 +71,8 @@ export const login = async (req, res) => {
             return res.status(401).json({ message: "Invalid credentials" });
         }
 
+        console.log("User info:", user);
+
         // Generate JWT token
         const token = jwt.sign(
             {
