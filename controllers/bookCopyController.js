@@ -19,8 +19,8 @@ export const getAllBookCopies = async (req, res) => {
 // Add a new book copy
 export const addNewBookCopy = async (req, res) => {
     try {
-        const { yearpublished, bookid, bookcondition, location, isAvailable } = req.body;
-        console.log('Received Data:', { bookid, bookcondition, location, isAvailable });
+        const { yearpublished, bookid, bookcondition, location, isavailable } = req.body;
+        console.log('Received Data:', { bookid, bookcondition, location, isavailable });
 
         // Trim and validate the book condition
         const bookconditionTrimmed = bookcondition.trim();
@@ -36,7 +36,7 @@ export const addNewBookCopy = async (req, res) => {
             return res.status(400).json({ message: "Invalid book condition." });
         }
 
-        const result = await addBookCopy(yearpublished, bookid, bookconditionTrimmed, location, isAvailable);
+        const result = await addBookCopy(yearpublished, bookid, bookconditionTrimmed, location, isavailable);
 
         res.status(201).json(result);
     } catch (error) {
