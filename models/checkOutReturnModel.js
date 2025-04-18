@@ -1,5 +1,5 @@
 import executeQuery from './util/queryUtils.js';
-import {pool} from "../services/database.js";
+import pool from "../services/database.js";
 
 export const checkoutBook = async (bookcopyid, patronid, pin) => {
     const connection = await pool.getConnection();
