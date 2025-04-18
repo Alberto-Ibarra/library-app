@@ -119,7 +119,6 @@ export const getPatronInfoByBookCopyId = async (bookcopyid) => {
                 p.firstname,
                 p.lastname,
                 p.email,
-                p.phone,
                 c.checkouttime,
                 b.title,
                 bc.id AS bookcopyid
