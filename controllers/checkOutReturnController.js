@@ -18,15 +18,18 @@ export const checkout = async (req, res) => {
 
 export const returnB = async (req, res) => {
     try {
-        const {checkOutId, patronId} = req.params
+        const { checkoutid, patronid } = req.params;
 
-        if (!checkOutId || !patronId) {
+        if (!checkoutid || !patronid) {
             return res.status(400).json({ message: "Missing parameters." });
         }
-        const result = await(returnBook(checkOutId, patronId))
-        const now = new Date();
-        res.status(200).json({message: 'Book returned: ' + now})
+
+        const result = await returnBook(checkoutid, patronid);
+
+        res.status(200).json({ message: `Book returned successfully at ${new Date().toLocaleString()}` });
     } catch (error) {
-        console.error(error)
+        // Handle errors gracefully
+        console.error(error);
+        res.status(500).json({ message: "Failed to return the book. Please try again later." });
     }
-}
+};

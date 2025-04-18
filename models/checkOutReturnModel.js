@@ -60,10 +60,32 @@ export const checkoutBook = async (bookcopyid, patronid, pin) => {
 };
 
 // Return a book (mark it as returned)
-export const returnBook = async (checkoutId, patronId) => {
-    const query = 
-        "UPDATE checkout " +
-        "SET returnedtime = NOW(), is_returned = TRUE " +
-        "WHERE id = ? AND patronaccountid = ?";
-    return await executeQuery(query, [checkoutId, patronId]);
+export const returnBook = async (checkoutid, patronid) => {
+    const connection = await pool.getConnection();
+
+    try {
+        await connection.beginTransaction();
+
+        // Step 1: Update checkout record to mark as returned
+        await connection.execute(
+            "UPDATE checkout SET returnedtime = NOW(), is_returned = TRUE WHERE id = ? AND patronaccountid = ?",
+            [checkoutid, patronid]
+        );
+
+        // Step 2: Update book availability to TRUE (book is now available)
+        await connection.execute(
+            "UPDATE book_copy SET isavailable = TRUE WHERE id = (SELECT bookcopyid FROM checkout WHERE id = ?)",
+            [checkoutid]
+        );
+
+        await connection.commit();
+        connection.release();
+
+        return { message: "Book returned successfully" };
+
+    } catch (error) {
+        await connection.rollback();
+        connection.release();
+        throw error;
+    }
 };
