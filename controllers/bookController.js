@@ -52,7 +52,10 @@ export const addNewBook = async (req, res) => {
     try {
         console.log(req.body); 
         const { title, authorNames, categoryId } = req.body;
-
+        console.log(title);
+        console.log(authorNames);
+        console.log(categoryId);
+        
         if (!title?.trim() || !authorNames?.length || !categoryId) {
             return res.status(400).json({ message: "Missing required fields." });
         }
