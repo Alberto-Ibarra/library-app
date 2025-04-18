@@ -11,7 +11,7 @@ export const checkout = async (req, res) => {
             return res.status(400).json({ message: "Missing parameters." });
         }
 
-        const result = await checkoutBook(bookcopyid, patroni d, pin);
+        const result = await checkoutBook(bookcopyid, patronid, pin);
         res.status(200).json(result);
     } catch (error) {
         console.error(error);
