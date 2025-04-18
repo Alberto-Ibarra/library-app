@@ -20,6 +20,7 @@ export const returnB = async (req, res) => {
     try {
         const { id } = req.params;
         console.log('book return triggered');
+        console.log(id);
         
         if (!id) {
             return res.status(400).json({ message: "Missing parameters." });
