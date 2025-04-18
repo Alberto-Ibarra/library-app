@@ -2,19 +2,20 @@ import { checkoutBook, returnBook } from "../models/checkOutReturnModel.js";
 
 export const checkout = async (req, res) => {
     try {
-        const { bookCopyId, patronId } = req.params;
+        const { bookCopyId, patronId, pin } = req.body;
 
-        if (!bookCopyId || !patronId) {
+        if (!bookCopyId || !patronId || !pin) {
             return res.status(400).json({ message: "Missing parameters." });
         }
 
-        const result = await checkoutBook(bookCopyId, patronId);
+        const result = await checkoutBook(bookCopyId, patronId, pin);
         res.status(200).json(result);
     } catch (error) {
         console.error(error);
         res.status(400).json({ message: error.message || "Checkout failed." });
     }
 };
+
 
 
 export const returnB = async (req, res) => {

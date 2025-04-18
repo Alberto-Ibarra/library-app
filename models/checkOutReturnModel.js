@@ -1,25 +1,38 @@
 import executeQuery from './util/queryUtils.js';
 
-export const checkoutBook = async (bookCopyId, patronId) => {
+export const checkoutBook = async (bookCopyId, patronId, pin) => {
+    // Step 1: Check if book is available
     const checkAvailabilityQuery = `
         SELECT bc.*, b.title 
         FROM book_copy bc
         LEFT JOIN book b ON b.id = bc.bookid
         WHERE bc.id = ? AND bc.isavailable = TRUE
     `;
-
     const availableResults = await executeQuery(checkAvailabilityQuery, [bookCopyId]);
-
     if (availableResults.length === 0) {
         throw new Error("Book copy is not available for checkout.");
     }
 
+    // Step 2: Validate PIN
+    const getPatronQuery = `SELECT pin FROM patron_account WHERE id = ?`;
+    const patronResult = await executeQuery(getPatronQuery, [patronId]);
+    if (patronResult.length === 0) {
+        throw new Error("Patron not found.");
+    }
+
+    const storedPin = patronResult[0].pin;
+    if (storedPin !== pin) {
+        throw new Error("Invalid PIN.");
+    }
+
+    // Step 3: Checkout book
     const checkoutQuery = `
         INSERT INTO checkout (checkouttime, bookcopyid, patronaccountid, is_returned)
         VALUES (NOW(), ?, ?, FALSE)
     `;
     await executeQuery(checkoutQuery, [bookCopyId, patronId]);
 
+    // Step 4: Update copy availability
     const updateCopyStatusQuery = `
         UPDATE book_copy
         SET isavailable = FALSE
@@ -29,6 +42,7 @@ export const checkoutBook = async (bookCopyId, patronId) => {
 
     return { message: "Book checked out successfully" };
 };
+
 
 
 // Return a book (mark it as returned)

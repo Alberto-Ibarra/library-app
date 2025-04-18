@@ -1,13 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import { authenticateToken } from "./middleware/authMiddleware.js";
-import bookRoutes from './routes/bookRoutes.js'
-import bookCopyRoutes from './routes/bookCopyRoutes.js'
-import patronRoutes from './routes/patronRoutes.js'
-import checkOutReturnRoutes from './routes/checkOutReturnRoutes.js'
-import notificationRoutes from './routes/notificationRoutes.js'
-import holdRoutes from './routes/holdRoutes.js'
-import authRoutes from './routes/authRoutes.js'
+import bookRoutes from './routes/bookRoutes.js';
+import bookCopyRoutes from './routes/bookCopyRoutes.js';
+import patronRoutes from './routes/patronRoutes.js';
+import checkOutReturnRoutes from './routes/checkOutReturnRoutes.js';
+import notificationRoutes from './routes/notificationRoutes.js';
+import holdRoutes from './routes/holdRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,7 +23,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use('/api/auth', authRoutes); // Public routes
+// Public routes
+app.use('/api/auth', authRoutes);
 
 // Protect all other routes
 app.use(authenticateToken);
