@@ -143,3 +143,33 @@ export const getPatronInfoByBookCopyId = async (bookcopyid) => {
         throw error;
     }
 };
+
+
+export const booksCheckedOutByPatron = async (patronId) => {
+    const connection = await pool.getConnection();
+
+    try {
+        const [results] = await connection.execute(
+            `
+            SELECT 
+                b.title,
+                bc.id AS bookCopyId,
+                c.checkouttime,
+                c.returnedtime,
+                b.categoryid,
+                b.id AS bookId
+            FROM checkout c
+            JOIN book_copy bc ON c.bookcopyid = bc.id
+            JOIN book b ON bc.bookid = b.id
+            WHERE c.patronaccountid = ? AND c.is_returned = FALSE
+            `,
+            [patronId]
+        );
+
+        connection.release();
+        return results;
+    } catch (error) {
+        connection.release();
+        throw error;
+    }
+};

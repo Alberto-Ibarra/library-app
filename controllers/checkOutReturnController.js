@@ -1,4 +1,4 @@
-import { checkoutBook, returnBook, getPatronInfoByBookCopyId } from "../models/checkOutReturnModel.js";
+import { checkoutBook, returnBook, getPatronInfoByBookCopyId, booksCheckedOutByPatron } from "../models/checkOutReturnModel.js";
 
 export const checkout = async (req, res) => {
     try {
@@ -48,5 +48,16 @@ export const getPatronInfo = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(404).json({ message: error.message || "Patron information not found." });
+    }
+};
+
+export const getBooksCheckedOutByPatron = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const books = await booksCheckedOutByPatron(id); // this should be your DB query
+        res.status(200).json(books);
+    } catch (error) {
+        console.error('Error fetching books checked out by patron:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 };
