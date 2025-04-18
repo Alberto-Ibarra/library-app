@@ -105,3 +105,42 @@ export const returnBook = async (bookcopyid) => {
         throw error;
     }
 };
+
+
+export const getPatronInfoByBookCopyId = async (bookcopyid) => {
+    const connection = await pool.getConnection();
+
+    try {
+        // Join checkout, patron_account, and book info to get patron and book details
+        const [results] = await connection.execute(
+            `
+            SELECT 
+                p.id AS patronId,
+                p.firstname,
+                p.lastname,
+                p.email,
+                p.phone,
+                c.checkouttime,
+                b.title,
+                bc.id AS bookcopyid
+            FROM checkout c
+            JOIN patron_account p ON c.patronaccountid = p.id
+            JOIN book_copy bc ON c.bookcopyid = bc.id
+            JOIN book b ON b.id = bc.bookid
+            WHERE c.bookcopyid = ? AND c.is_returned = FALSE
+            `,
+            [bookcopyid]
+        );
+
+        connection.release();
+
+        if (results.length === 0) {
+            throw new Error("No active checkout found for this book copy.");
+        }
+
+        return results[0];
+    } catch (error) {
+        connection.release();
+        throw error;
+    }
+};
