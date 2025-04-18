@@ -1,9 +1,8 @@
 import executeQuery from './util/queryUtils.js';
-import mysql from "mysql2/promise";
 import {pool} from "../services/database.js";
 
 export const checkoutBook = async (bookcopyid, patronid, pin) => {
-    const connection = await mysql.createConnection(pool);
+    const connection = await pool.getConnection();
 
     try {
         await connection.beginTransaction();
