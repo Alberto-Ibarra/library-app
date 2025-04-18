@@ -19,12 +19,14 @@ export const checkout = async (req, res) => {
 export const returnB = async (req, res) => {
     try {
         const { id } = req.params;
-
+        console.log('book return triggered');
+        
         if (!id) {
             return res.status(400).json({ message: "Missing parameters." });
         }
 
         const result = await returnBook(id);
+        console.log(result);
 
         res.status(200).json({ message: `Book returned successfully at ${new Date().toLocaleString()}` });
     } catch (error) {
