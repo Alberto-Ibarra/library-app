@@ -1,5 +1,5 @@
 import executeQuery from './util/queryUtils.js';
-import mysql from "mysql2/proimise";
+import mysql from "mysql2/promise";
 import {database} from "../services/database.js";
 
 export const checkoutBook = async (bookcopyid, patronid, pin) => {
