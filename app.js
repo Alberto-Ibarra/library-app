@@ -21,6 +21,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+console.log(authenticateToken);
+
 app.use(express.json());
 
 // Public routes
