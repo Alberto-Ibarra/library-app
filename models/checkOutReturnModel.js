@@ -55,27 +55,43 @@ export const checkoutBook = async (bookcopyid, patronid, pin) => {
     } catch (error) {
         await connection.rollback();
         connection.release();
-        throw error; // This will be caught by the controller
+        throw error;
     }
 };
 
 // Return a book (mark it as returned)
-export const returnBook = async (checkoutid, patronid) => {
+export const returnBook = async (bookcopyid) => {
     const connection = await pool.getConnection();
 
     try {
         await connection.beginTransaction();
 
-        // Step 1: Update checkout record to mark as returned
+        // Step 1: Find the checkout record using the bookcopyid
+        const [checkoutData] = await connection.execute(
+            "SELECT id, patronaccountid FROM checkout WHERE bookcopyid = ? AND is_returned = FALSE",
+            [bookcopyid]
+        );
+
+        if (checkoutData.length === 0) {
+            throw new Error('No active checkout record found for this book copy.');
+        }
+
+        const checkoutid = checkoutData[0].id;
+        console.log(checkoutid);
+        
+        const patronid = checkoutData[0].patronaccountid;
+        console.log(patronid);
+        
+        // Step 2: Update checkout record to mark as returned
         await connection.execute(
             "UPDATE checkout SET returnedtime = NOW(), is_returned = TRUE WHERE id = ? AND patronaccountid = ?",
             [checkoutid, patronid]
         );
 
-        // Step 2: Update book availability to TRUE (book is now available)
+        // Step 3: Update book availability to TRUE (book is now available)
         await connection.execute(
-            "UPDATE book_copy SET isavailable = TRUE WHERE id = (SELECT bookcopyid FROM checkout WHERE id = ?)",
-            [checkoutid]
+            "UPDATE book_copy SET isavailable = TRUE WHERE id = ?",
+            [bookcopyid]
         );
 
         await connection.commit();
