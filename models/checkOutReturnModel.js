@@ -77,10 +77,7 @@ export const returnBook = async (bookcopyid) => {
         }
 
         const checkoutid = checkoutData[0].id;
-        console.log(checkoutid);
-        
         const patronid = checkoutData[0].patronaccountid;
-        console.log(patronid);
         
         // Step 2: Update checkout record to mark as returned
         await connection.execute(

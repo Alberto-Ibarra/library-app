@@ -4,6 +4,15 @@ import executeQuery from './util/queryUtils.js';
 // Create a patron
 export const createPatronAccount = async (pin, firstname, lastname, email, status) => {
     try {
+        // Check if email already exists
+        const checkEmail = "SELECT * FROM patron_account WHERE email = ?";
+        const existing = await executeQuery(checkEmail, [email]);
+
+        if (existing.length > 0) {
+            return { message: "Email already exists", error: true };
+        }
+
+        // Add patron
         const addPatron = "INSERT INTO patron_account (pin, firstname, lastname, email, status) VALUES (?, ?, ?, ?, 'Active')"
         const result = await executeQuery(addPatron, [pin, firstname,lastname, email, status])
         return { message: "patron added successfully", result };

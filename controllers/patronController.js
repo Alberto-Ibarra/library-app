@@ -10,6 +10,10 @@ export const addNewPatron = async (req, res) => {
     try {
         const {pin, firstname, lastname, email, status} = req.body
 
+        if (patron.error) {
+            return res.status(409).json({ message: patron.message });
+        }
+
         if (!pin?.trim() || !firstname?.trim() || !lastname?.trim() || !email?.trim()) {
             return res.status(400).json({ message: "Missing required fields." });
         }
