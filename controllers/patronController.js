@@ -3,8 +3,7 @@ import { createPatronAccount,
     suspendPatronAccount, 
     // getAllActivePatrons,
     updatePatron,
-    getAllPatrons,
-    findSingleBookWithDetails
+    getAllPatrons
 } from "../models/patronAccountModel.js";
 
 export const addNewPatron = async (req, res) => {
@@ -80,23 +79,4 @@ export const updateP = async (req, res) => {
     }
 }
 
-export const getSingleBookDetails = async (req, res) => {
-    try {
-        const { id } = req.params;
 
-        if (!id) {
-            return res.status(400).json({ message: "Missing book copy ID." });
-        }
-
-        const bookDetails = await findSingleBookWithDetails(id);
-
-        if (!bookDetails || bookDetails.length === 0) {
-            return res.status(404).json({ message: "Book copy not found." });
-        }
-
-        res.status(200).json(bookDetails[0]);
-    } catch (error) {
-        console.error("Error fetching book details:", error);
-        res.status(500).json({ message: "Internal Server Error" });
-    }
-};
