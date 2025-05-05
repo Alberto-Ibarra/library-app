@@ -95,3 +95,48 @@ export const findCopiesOnHold = async () => {
         "JOIN patron_account p ON h.patronaccountid = p.id "
     return await executeQuery(query);
 };
+
+export const findSingleBookWithDetails = async (bookCopyId) => {
+    const query = `
+        SELECT 
+            b.title AS book_title,
+            GROUP_CONCAT(DISTINCT a.name SEPARATOR ', ') AS authors,
+            c.title AS category,
+            bc.id AS bookcopyid,
+            bc.bookcondition,
+            bc.yearpublished,
+            bc.location,
+            bc.isavailable,
+            CASE 
+                WHEN co.id IS NOT NULL AND co.is_returned = FALSE THEN 'Checked Out'
+                WHEN h.id IS NOT NULL AND h.endtime > NOW() THEN 'On Hold'
+                ELSE 'Available'
+            END AS status,
+
+            -- Patron info if checked out
+            pa.id AS patronid,
+            pa.firstname,
+            pa.lastname,
+            pa.email,
+            co.checkouttime,
+            co.returnedtime,
+
+            -- Hold info
+            h.starttime AS hold_start,
+            h.endtime AS hold_end
+
+        FROM book_copy bc
+        JOIN book b ON bc.bookid = b.id
+        LEFT JOIN book_author ba ON b.id = ba.bookid
+        LEFT JOIN author a ON ba.authorid = a.id
+        LEFT JOIN category c ON b.categoryid = c.id
+        LEFT JOIN checkout co ON bc.id = co.bookcopyid AND co.is_returned = FALSE
+        LEFT JOIN patron_account pa ON co.patronaccountid = pa.id
+        LEFT JOIN hold h ON bc.id = h.bookcopyid AND h.endtime > NOW()
+
+        WHERE bc.id = ?
+        GROUP BY bc.id, co.id, pa.id, h.id;
+    `;
+
+    return await executeQuery(query, [bookCopyId]);
+};

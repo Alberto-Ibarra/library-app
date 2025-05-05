@@ -5,7 +5,8 @@ import { getAllBookCopies,
     getAllAvailableCopies,
     getCheckedOutCopies,
     copiesOnHold,
-    updateBookCopy
+    updateBookCopy,
+    getSingleBookDetails
 } from '../controllers/bookCopyController.js';
 
 const router = express.Router();
@@ -17,6 +18,7 @@ router.delete('/copies/:id', deleteBookCopy);
 router.get('/available', getAllAvailableCopies);
 router.get('/checkedout', getCheckedOutCopies);
 router.get('/onhold', copiesOnHold);
+router.get('/copy/:id', getSingleBookDetails);
 
 
 export default router;
