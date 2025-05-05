@@ -15,6 +15,9 @@ export const addNewPatron = async (req, res) => {
         }
 
         const patron = await createPatronAccount(pin, firstname, lastname, email, status)
+        if (patron.error) {
+            return res.status(409).json({ message: patron.message });
+        }
         res.status(200).json(patron)
     } catch (error) {
         console.error(error)
