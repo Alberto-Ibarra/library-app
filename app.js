@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 
 // Enable CORS for specific domains
 const corsOptions = {
-    origin: ["http://localhost:5173", "https://yourfrontend.com"], // Adjust this based on frontend URL
+    origin: ["http://localhost:5173", "https://library-app-frontend-mu.vercel.app"],
     methods: "GET,POST,PUT,DELETE",
     allowedHeaders: "Content-Type,Authorization",
 };
