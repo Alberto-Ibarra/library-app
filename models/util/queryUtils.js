@@ -1,5 +1,6 @@
 import pool from '../../services/database.js';
 
+// pool.query for simple operations
 const executeQuery = async (query, params = []) => {
     try {
         const [rows] = await pool.query(query, params);

@@ -2,6 +2,7 @@ import executeQuery from './util/queryUtils.js';
 import pool from "../services/database.js";
 
 export const checkoutBook = async (bookcopyid, patronid, pin) => {
+    //pool.getConnection for complex multi-step updates
     const connection = await pool.getConnection();
 
     try {
