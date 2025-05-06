@@ -29,6 +29,18 @@ npm install
 npm run dev
 ```
 
+## ⚙️ Environment Variables
+
+To run the application, make sure to configure the following environment variables:
+
+```bash
+MYSQLHOST=<your-mysql-host>
+MYSQLUSER=<your-mysql-username>
+MYSQLPASSWORD=<your-mysql-password>
+MYSQL_DATABASE=<your-mysql-database-name>
+JWT_SECRET=<your-jwt-secret-key>
+```
+
 ## 📡 API Endpoints
 
 ### 🔐 Auth Routes (`/api/auth`)
