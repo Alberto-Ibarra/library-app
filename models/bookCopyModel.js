@@ -51,15 +51,24 @@ export const editBookCopy = async (id, bookcondition, location) => {
     }
 };
 
-// Remove a copy of a book (if it’s not checked out)
 export const removeBookCopy = async (bookCopyId) => {
-    const query = 
-        "DELETE FROM book_copy " +
-        "WHERE id = ? AND NOT EXISTS (" +
-        "    SELECT 1 FROM checkout WHERE bookcopyid = ? AND is_returned = FALSE" +
-        ")";
-    return await executeQuery(query, [bookCopyId, bookCopyId]);
+    // First check if the book copy is currently checked out
+    const checkQuery = "SELECT 1 FROM checkout WHERE bookcopyid = ? AND is_returned = FALSE";
+    const checkResult = await executeQuery(checkQuery, [bookCopyId]);
+
+    if (checkResult.length > 0) {
+        throw new Error("Cannot delete book copy. It is currently checked out.");
+    }
+
+    // Delete any returned checkout history related to the book copy (optional but required for FK)
+    const deleteHistoryQuery = "DELETE FROM checkout WHERE bookcopyid = ? AND is_returned = TRUE";
+    await executeQuery(deleteHistoryQuery, [bookCopyId]);
+
+    // Now delete the book copy
+    const deleteBookCopyQuery = "DELETE FROM book_copy WHERE id = ?";
+    return await executeQuery(deleteBookCopyQuery, [bookCopyId]);
 };
+
 
 // Find all books currently available (not checked out)
 export const findAvailableCopies = async () => {
