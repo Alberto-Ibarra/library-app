@@ -23,8 +23,8 @@ This backend follows the **Model-View-Controller (MVC)** design pattern:
 ## ⚙️ Setup Instructions
 
 ```bash
-git clone https://github.com/yourusername/library-app-backend.git
-cd library-app-backend
+git clone https://github.com/yourusername/library-app.git
+cd library-app
 npm install
 npm run dev
 ```
