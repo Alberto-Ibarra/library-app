@@ -41,6 +41,12 @@ MYSQL_DATABASE=<your-mysql-database-name>
 JWT_SECRET=<your-jwt-secret-key>
 ```
 
+## 🗂️ Database Diagram
+
+Here is a visual representation of the database schema:
+
+![Database Diagram](screenshots/dbdiagram.png)
+
 ## 📡 API Endpoints
 
 ### 🔐 Auth Routes (`/api/auth`)
